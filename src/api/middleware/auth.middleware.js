@@ -18,7 +18,7 @@ export const authMiddleware = (req, res, next) => {
 
   try {
     const data = jwt.verify(token, JWT_SECRET);
-    req.email = data.email;
+    req.user = data;
     return next();
   } catch (error) {
     console.error(error);

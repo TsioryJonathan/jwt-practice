@@ -1,10 +1,12 @@
 import { readJsonFile, writeJsonFile } from "../service/fileService.js";
 import { randomUUID } from "crypto";
 
-export const getAll = async (_req, res) => {
+export const getAll = async (req, res) => {
   try {
+    const { sub: userId } = req.user;
     const data = await readJsonFile("todo.json");
-    res.json(data.todos);
+    const usersTodo = data.todos.filter((todo) => (todo.userId == userId));
+    res.json(usersTodo);
   } catch (err) {
     console.error(err);
   }
@@ -12,19 +14,22 @@ export const getAll = async (_req, res) => {
 
 export const createTodo = async (req, res) => {
   const { title, description } = req.body;
+  const { sub: userId } = req.user;
 
   if (!title || !description) {
-    return res.status(400).json({ message: "All fields required: id, title, description" });
+    return res.status(400).json({ message: "All fields required: title, description" });
   }
 
   try {
     const data = await readJsonFile("todo.json");
     data.todos.push({
       id: randomUUID(),
+      userId,
       title,
       description,
     });
-    await writeJsonFile(data);
+    await writeJsonFile(data, "todo.json");
+
     res.json({
       message: "Succes",
     });
@@ -63,7 +68,7 @@ export const deleteTodo = async (req, res) => {
   try {
     const data = await readJsonFile("todo.json");
     data.todos = data.todos.filter((todo) => todo.id != id);
-    await writeJsonFile(data);
+    await writeJsonFile(data, "todo.json");
     res.json({
       message: "Succesfully deleted",
       todos: data.todos,
