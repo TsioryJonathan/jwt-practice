@@ -1,10 +1,17 @@
-[
-  {
-    "email": "test@gmail.com",
-    "password": "test123456"
-  },
-  {
-    "email": "test@gmail.com",
-    "password": "$2b$10$q3Wu2fFb1E2ygA9Mep3bte0MiQ7sYRDSlWTq4rn6xS0d1e3pGtQj6"
-  }
-]
+{
+  "users": [
+    {
+      "email": "test@gmail.com",
+      "password": "test123456"
+    },
+    {
+      "email": "test@gmail.com",
+      "password": "$2b$10$q3Wu2fFb1E2ygA9Mep3bte0MiQ7sYRDSlWTq4rn6xS0d1e3pGtQj6"
+    },
+    {
+      "id": 3,
+      "email": "test1@gmail.com",
+      "password": "$2b$10$izA9zzadDIFGVOjXQivHOuaOm0Gr1IO7jwqgHGDUCn4G.oLi2GvEC"
+    }
+  ]
+}
