@@ -55,19 +55,21 @@ export const login = async (req, res) => {
     const data = await readJsonFile("users.json");
     const user = data.users.find((u) => u.email == email);
     if (!user) {
-      return res.json({
+      res.status(401).json({
         message: "User not found",
       });
+      return;
     }
     const compare = await bcrypt.compare(password, user.password);
     if (!compare) {
-      return res.json({
+      res.status(401).json({
         message: "Invalid Credentials",
       });
+      return;
     }
 
     const token = jwt.sign({ sub: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
-    res.json({
+    res.status(200).json({
       message: "User succesfully logged in",
       token,
     });
