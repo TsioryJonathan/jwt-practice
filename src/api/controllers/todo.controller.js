@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 
 export const getAll = async (_req, res) => {
   try {
-    const data = await readJsonFile();
+    const data = await readJsonFile("todo.json");
     res.json(data.todos);
   } catch (err) {
     console.error(err);
@@ -18,7 +18,7 @@ export const createTodo = async (req, res) => {
   }
 
   try {
-    const data = await readJsonFile();
+    const data = await readJsonFile("todo.json");
     data.todos.push({
       id: randomUUID(),
       title,
@@ -36,7 +36,7 @@ export const createTodo = async (req, res) => {
 export const updateTodo = async (req, res) => {
   try {
     const id = req.params.id;
-    const data = await readJsonFile();
+    const data = await readJsonFile("todo.json");
     const foundIndex = data.todos.findIndex((el) => el.id == id);
 
     if (foundIndex == -1)
@@ -48,7 +48,7 @@ export const updateTodo = async (req, res) => {
       ...data.todos[foundIndex],
       ...req.body,
     };
-    await writeJsonFile(data);
+    await writeJsonFile(data, "todo.json");
     res.json({
       message: "Succesfully updated",
       Todo: data.todos[foundIndex],
@@ -61,7 +61,7 @@ export const updateTodo = async (req, res) => {
 export const deleteTodo = async (req, res) => {
   const id = req.params.id;
   try {
-    const data = await readJsonFile();
+    const data = await readJsonFile("todo.json");
     data.todos = data.todos.filter((todo) => todo.id != id);
     await writeJsonFile(data);
     res.json({
