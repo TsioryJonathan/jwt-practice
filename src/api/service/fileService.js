@@ -1,25 +1,24 @@
-import { promises as fs } from "fs";
+import fs from "fs/promises";
 import path from "path";
 
+const dataDir = path.resolve(process.cwd(), "src/api/data");
+
 export async function readJsonFile(filename) {
-  const toRead = path.join(process.cwd(), "src", "api", "data", filename);
   try {
-    const data = await fs.readFile(toRead, "utf8");
-    return JSON.parse(data || "{}");
+    const filePath = path.join(dataDir, filename);
+    const content = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(content);
   } catch (err) {
-    console.error(`Error reading ${toRead}:`, err);
+    if (err.code === "ENOENT") {
+      console.warn(`⚠️ File not found: ${filename}, returning empty object`);
+      return { users: [] };
+    }
     throw err;
   }
 }
 
-export async function writeJsonFile(jsonData, filename) {
-  const toWrite = path.join(process.cwd(), "src", "api", "data", filename);
-  try {
-    await fs.mkdir(path.dirname(toWrite), { recursive: true });
-    const jsonString = JSON.stringify(jsonData, null, 2);
-    await fs.writeFile(toWrite, jsonString, "utf8");
-  } catch (err) {
-    console.error(`Error writing ${toWrite}:`, err);
-    throw err;
-  }
+export async function writeJsonFile(data, filename) {
+  const filePath = path.join(dataDir, filename);
+  await fs.mkdir(dataDir, { recursive: true });
+  await fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf-8");
 }
