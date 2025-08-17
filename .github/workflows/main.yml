@@ -1,0 +1,13 @@
+name: Cron Job
+
+on:
+  schedule:
+    - cron: "*/6 * * * *"   
+  workflow_dispatch:        
+
+jobs:
+  call-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call backend API
+        run: curl -sS --fail https://jwt-todo-backend.onrender.com/api/health-check/hello
