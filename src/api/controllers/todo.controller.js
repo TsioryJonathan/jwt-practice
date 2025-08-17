@@ -3,11 +3,15 @@ import { randomUUID } from "crypto";
 
 export const getAll = async (req, res) => {
   try {
+
     const { sub: userId } = req.user;
     const data = await readJsonFile("todo.json");
-    const usersTodo = data.todos.filter((todo) => (todo.userId == userId));
-    res.json(usersTodo);
+    const usersTodo = data.todos.filter((todo) => todo.userId == userId);
+    res.status(200).json(usersTodo);
   } catch (err) {
+    res.status(400).json({
+      message: "An error occured",
+    });
     console.error(err);
   }
 };
