@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteTodo, getTodo } from "@/service/todo";
 import type { Todo } from "@/types/todo";
-import { AlertTriangle, ArrowBigLeft, Filter, Loader2, Plus, RefreshCcw } from "lucide-react";
+import { AlertTriangle, ArrowBigLeft, Filter, Loader2, Plus } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import TodoCard from "@/components/TodoCard";
 import { getUsername } from "@/service/userInfo";
@@ -87,13 +87,6 @@ export default function TodoPage() {
           <p className="font-medium">{error}</p>
         </div>
         <div className="flex gap-3">
-          <button
-            onClick={loadTodos}
-            className="inline-flex items-center gap-2 rounded-lg bg-gray-900 text-white px-4 py-2"
-          >
-            <RefreshCcw size={16} />
-            Retry
-          </button>
           <Link to="/" className="inline-flex items-center gap-2 rounded-lg bg-gray-200 text-gray-900 px-4 py-2">
             <ArrowBigLeft size={16} />
             Go back
