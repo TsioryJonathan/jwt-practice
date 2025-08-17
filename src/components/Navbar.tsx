@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut, LogOutIcon } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -12,22 +12,33 @@ export default function Navbar() {
     }
   };
 
-  return (
-    <nav className={`sticky top-0 mx-auto z-50 w-full bg-gray-800 backdrop-blur rounded-lg  max-w-3xl  `}>
-      <div className="mx-auto flex h-14 items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2">
-          <span className="w-6 h-6 rounded-full bg-gray-200 p-5 flex items-center justify-center text-black">T</span>
-          <span className="text-sm font-semibold tracking-tight">Todo App</span>
-        </Link>
 
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-5
-        "
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </button>
+  return (
+    <nav className="sticky top-5 z-50 w-full ">
+      <div className="mx-auto max-w-6xl px-3 sm:px-4">
+        <div className="mt-3 rounded-xl shadow-lg bg-white/90 backdrop-blur-2xl">
+          <div className="flex h-14 items-center justify-between px-4">
+            {/* Brand */}
+            <Link to="/todo" className="flex items-center gap-2 group">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-violet-700 font-bold">
+                T
+              </span>
+              <span className="text-sm font-semibold tracking-tight text-black group-hover:text-violet-500">
+                Todo App
+              </span>
+            </Link>
+
+            {/* Actions */}
+            <button
+              onClick={handleLogout}
+              className="text-black flex items-center gap-5 bg-gray-400/50 rounded-lg px-5 py-2 cursor-pointer"
+              aria-label="Log out"
+            >
+              <LogOut className="h-4 w-4" />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        </div>
       </div>
     </nav>
   );

@@ -10,21 +10,24 @@ export type RegisterFormProps = {
   className?: string;
   setNewEmail: Dispatch<SetStateAction<string>>;
   setNewPassword: Dispatch<SetStateAction<string>>;
+  setUsername: Dispatch<SetStateAction<string>>;
   onRegister: (e: React.MouseEvent<HTMLButtonElement>) => void;
   isLoading: boolean;
 };
 
-export function RegisterForm({ className, setNewEmail, setNewPassword, onRegister, isLoading }: RegisterFormProps) {
+export function RegisterForm({
+  className,
+  setNewEmail,
+  setNewPassword,
+  onRegister,
+  isLoading,
+  setUsername,
+}: RegisterFormProps) {
   const [showPwd, setShowPwd] = useState(false);
 
   return (
-    <div className={cn(" max-h-screen flex items-center justify-center p-6 bg-transparent", className)}>
+    <div className={cn("max-h-screen flex items-center justify-center p-6 bg-transparent", className)}>
       <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-2xl shadow-lg">
-        {/* Logo */}
-        <div>
-          <span className="text-violet-600 font-bold text-lg">Todo App</span>
-        </div>
-
         {/* Heading */}
         <div>
           <h1 className="text-3xl font-bold tracking-tight mb-2 text-gray-900">Welcome, join us</h1>
@@ -34,6 +37,22 @@ export function RegisterForm({ className, setNewEmail, setNewPassword, onRegiste
         {/* Form */}
         <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
           <fieldset disabled={isLoading} className="space-y-6 mb-10">
+            <div className="grid gap-2">
+              <Label htmlFor="email" className="text-gray-700">
+                Username
+              </Label>
+              <div className="relative">
+                <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <Input
+                  id="username"
+                  type="username"
+                  placeholder="stanley_chan"
+                  className="pl-9 border-gray-300 text-black focus:border-violet-500 focus:ring-violet-500"
+                  required
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+            </div>
             {/* Email */}
             <div className="grid gap-2">
               <Label htmlFor="email" className="text-gray-700">

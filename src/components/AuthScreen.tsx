@@ -18,6 +18,7 @@ function AuthScreen() {
   const [newEmail, setNewEmail] = useState<string>("");
   const [newPassword, setNewPassword] = useState<string>("");
   const [statusMessage, setStatusMessage] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
 
   const onLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!email || !password) return;
@@ -28,6 +29,7 @@ function AuthScreen() {
       setIsLoading(false);
       setStatusMessage("Connexion réussie, redirection…");
       navigate("/todo");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       const apiMsg = err?.response?.data?.message;
       setError(apiMsg ?? err.message ?? "Une erreur inconnue est survenue");
@@ -40,10 +42,8 @@ function AuthScreen() {
     if (!newEmail || !newPassword) return;
     e.preventDefault();
     try {
-      console.log("succes");
-
       setIsLoading(true);
-      const res = await register(newEmail, newPassword);
+      const res = await register(username, newEmail, newPassword);
 
       if (res === "User already exist") {
         setError("User already exists");
@@ -55,6 +55,7 @@ function AuthScreen() {
       setIsLoading(false);
       setStatusMessage("Registered succesfully !");
       window.location.reload();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       const apiMsg = err?.response?.data?.message;
       setError(apiMsg ?? err.message ?? "Une erreur inconnue est survenue");
@@ -100,6 +101,7 @@ function AuthScreen() {
               setNewPassword={setNewPassword}
               onRegister={onRegister}
               isLoading={isLoading}
+              setUsername={setUsername}
             />
           </TabsContent>
         </Tabs>

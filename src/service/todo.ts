@@ -24,3 +24,41 @@ export const getTodo = async (token: string) => {
     }
   }
 };
+
+export const createTodo = async (token: string, todo: { title: string; description: string }) => {
+  try {
+    const res = await axiosInstance.post(
+      "/api/todo",
+      {
+        title: todo.title,
+        description: todo.description,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteTodo = async (token: string, id: string) => {
+  if (!token || !id) {
+    console.error("Required parameters");
+    return;
+  }
+  try {
+    const res = await axiosInstance.delete(`/api/todo/${id.toString().trim()}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data.todos;
+  } catch (error) {
+    console.error(error);
+  }
+};

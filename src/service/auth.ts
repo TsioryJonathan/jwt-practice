@@ -9,11 +9,12 @@ export const login = async (email: string, password: string) => {
   localStorage.setItem("token", data.token);
 };
 
-export const register = async (email: string, password: string) => {
+export const register = async (username: string, email: string, password: string) => {
   const res = await axiosInstance.post("/api/auth/register", {
+    username,
     email,
     password,
   });
-  
+
   return res.data.message;
 };

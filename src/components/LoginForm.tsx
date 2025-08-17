@@ -19,12 +19,7 @@ export default function LoginForm({ className, setEmail, setPassword, onLogin, i
 
   return (
     <div className={cn("max-h-screen flex items-center justify-center p-6 bg-transparent", className)}>
-      <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-2xl shadow-lg">
-        {/* Logo */}
-        <div>
-          <span className="text-violet-600 font-bold text-lg">Todo App</span>
-        </div>
-
+      <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-2xl shadow-lg backdrop-blur-2xl">
         {/* Heading */}
         <div>
           <h1 className="text-3xl font-bold tracking-tight mb-2 text-gray-900">Holla, Welcome Back</h1>

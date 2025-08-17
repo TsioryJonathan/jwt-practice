@@ -1,24 +1,11 @@
 {
   "todos": [
     {
-      "id": "f5984f31-bb63-4e6f-891b-d2742dac3549",
-      "userId": 2,
-      "title": "User2 todo",
-      "description": "This is a test",
-      "status": true
-    },
-    {
-      "id": "c66e967a-5b8a-42a4-a5d0-eafc4a369958",
-      "userId": 2,
-      "title": "User2 todo",
-      "description": "This is a test",
-      "status": true
-    },
-    {
       "id": "7421085d-d12c-427b-b36d-30076a608ae3",
       "userId": 1,
-      "title": "User1 todo",
-      "description": "This is a test",
+      "username": "tsiory_jonathan",
+      "title": "Go to the barber",
+      "description": "Today you should get to the barber",
       "status": true
     }
   ]

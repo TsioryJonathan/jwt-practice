@@ -10,9 +10,9 @@ if (!JWT_SECRET) {
 }
 
 export const register = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
 
-  if (!password || !email) {
+  if (!password || !email || !username) {
     return res.json({
       message: "All field required",
     });
@@ -29,6 +29,7 @@ export const register = async (req, res) => {
   const encryptedPassword = await hashPassword(password.toString());
   const user = {
     id: data.users.length + 1,
+    username,
     email,
     password: encryptedPassword,
   };
@@ -68,7 +69,9 @@ export const login = async (req, res) => {
       return;
     }
 
-    const token = jwt.sign({ sub: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ sub: user.id, username: user.username, email: user.email }, JWT_SECRET, {
+      expiresIn: "1h",
+    });
     res.status(200).json({
       message: "User succesfully logged in",
       token,

@@ -3,7 +3,6 @@ import { randomUUID } from "crypto";
 
 export const getAll = async (req, res) => {
   try {
-
     const { sub: userId } = req.user;
     const data = await readJsonFile("todo.json");
     const usersTodo = data.todos.filter((todo) => todo.userId == userId);
@@ -18,7 +17,7 @@ export const getAll = async (req, res) => {
 
 export const createTodo = async (req, res) => {
   const { title, description } = req.body;
-  const { sub: userId } = req.user;
+  const { sub: userId, username } = req.user;
 
   if (!title || !description) {
     return res.status(400).json({ message: "All fields required: title, description" });
@@ -26,16 +25,21 @@ export const createTodo = async (req, res) => {
 
   try {
     const data = await readJsonFile("todo.json");
-    data.todos.push({
+    const toAdd = {
       id: randomUUID(),
       userId,
+      username,
       title,
       description,
-    });
+      createdAt: Date.now(),
+      status: false,
+    };
+    data.todos.push(toAdd);
     await writeJsonFile(data, "todo.json");
 
     res.json({
       message: "Succes",
+      todo: toAdd,
     });
   } catch (error) {
     console.error(error);
@@ -56,6 +60,7 @@ export const updateTodo = async (req, res) => {
     data.todos[foundIndex] = {
       ...data.todos[foundIndex],
       ...req.body,
+      createdAt: Date.now(),
     };
     await writeJsonFile(data, "todo.json");
     res.json({
