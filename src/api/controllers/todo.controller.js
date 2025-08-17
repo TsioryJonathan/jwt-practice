@@ -10,8 +10,8 @@ export const getAll = async (req, res) => {
   } catch (err) {
     res.status(400).json({
       message: "An error occured",
+      err: err,
     });
-    console.error(err);
   }
 };
 
