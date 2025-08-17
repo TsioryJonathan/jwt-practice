@@ -18,34 +18,41 @@ export const register = async (req, res) => {
     });
   }
 
-  const data = await readJsonFile("users.json");
-  const alreadyExist = data.users.some((user) => user.email == email);
+  try {
+    const data = await readJsonFile("users.json");
+    const alreadyExist = data.users.some((user) => user.email == email);
 
-  if (alreadyExist)
-    return res.json({
-      message: "User already exist",
+    if (alreadyExist)
+      return res.json({
+        message: "User already exist",
+      });
+
+    const encryptedPassword = await hashPassword(password.toString());
+    const user = {
+      id: data.users.length + 1,
+      username,
+      email,
+      password: encryptedPassword,
+    };
+    const users = data.users;
+    users.push(user);
+
+    await writeJsonFile(
+      {
+        users,
+      },
+      "users.json",
+    );
+
+    res.status(200).json({
+      message: "User Created succesfully",
     });
-
-  const encryptedPassword = await hashPassword(password.toString());
-  const user = {
-    id: data.users.length + 1,
-    username,
-    email,
-    password: encryptedPassword,
-  };
-  const users = data.users;
-  users.push(user);
-
-  await writeJsonFile(
-    {
-      users,
-    },
-    "users.json",
-  );
-
-  res.status(200).json({
-    message: "User Created succesfully",
-  });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: "An error occured",
+    });
+  }
 };
 
 export const login = async (req, res) => {
