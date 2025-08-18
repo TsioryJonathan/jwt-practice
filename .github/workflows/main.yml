@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call backend API
-        run: curl -sS --fail https://jwt-todo-backend.onrender.com/api/health-check/hello
+        run: curl https://jwt-todo-backend.onrender.com/api/health-check/hello
